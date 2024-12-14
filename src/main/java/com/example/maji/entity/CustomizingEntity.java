@@ -51,6 +51,9 @@ public class CustomizingEntity {
     @OneToMany(mappedBy = "customizingEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShoppingCartEntity> shoppingCarts;
 
+    @OneToMany(mappedBy = "customizingEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShoppingHistoryListEntity> shoppingHistoryListEntities;
+
     //-----------------------------
 
     @ManyToOne

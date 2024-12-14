@@ -74,4 +74,11 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShoppingCartEntity> shoppingCarts;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShoppingHistoryEntity> shoppingHistoryEntities;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CustomizingEntity> customizingEntities;
+
 }
