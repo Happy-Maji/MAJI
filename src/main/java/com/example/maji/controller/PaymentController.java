@@ -21,6 +21,8 @@ public class PaymentController {
     public Map<String, String> createPaymentIntent(@RequestBody Map<String, Object> data) throws Exception {
         int amount = (int) data.get("amount"); // 결제할 금액 (단위는 센트)
 
+        System.out.println("들어온 값:" + amount);
+
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount((long) amount) // 예: 1000 센트 = $10.00
                 .setCurrency("jpy") // 결제할 통화 (예: 일본 엔화)
