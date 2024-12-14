@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>관리자</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            text-align: center;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        th, td {
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            padding: 8px;
+            text-align: center;
+        }
+        .container {
+            margin-top: 0;
+            margin-left: 200px;
+            padding: 10px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+        .submitBtn, .denialBtn {
+            padding: 5px;
+            background-color: white;
+            border: 1.5px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submitBtn:hover{
+			background-color: #daf2f2;
+		}
+        .denialBtn:hover{
+			background-color: #f2dada;
+		}
+    </style>
+</head>
+<body>
+
+<!--메뉴-->
+<div id="administration">
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-style"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-head"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-body"></div>
+</div>
+
+<!--메인-->
+<div class="main">
+    <div class="dashboard">
+        <div class="container">
+            <h3>판매자 등록 신청 리스트</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">no.</th>
+                            <th style="width: 150px;">集類</th>
+                            <th style="width: 100px;">カスタマイズ</th>
+                            <th style="width: 300px;">タイトル</th>
+                            <th style="width: 300px;">値段</th>
+                            <th style="width: 300px;">日時</th>
+                            <th style="width: 100px;">販売数</th>
+                            <th style="width: 200px;">販売者</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="customizingList, stat: ${customizingList}">
+                        <td th:text="${stat.index + 1}"></td>
+                            <td th:text="${customizingList.customizingInfoEntity.customizingInfoName}"></td>
+                            <td>
+                                <img th:src="@{'/images/' + ${customizingList.customizingImg}}" style="width:200px; height:200px;">
+                            </td>
+                            <td th:text="${customizingList.customizingTitle}"></td>
+                            <td th:text="${customizingList.customizingPrice}"></td>
+                            <td th:text="${customizingList.customizingDate}"></td>
+                            <td th:text="${customizingList.customizingDate}"></td>
+                            <td th:text="${customizingList.userEntity.userFn + ' ' + customizingList.userEntity.userLn}"></td>
+
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

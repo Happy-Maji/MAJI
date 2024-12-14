@@ -55,12 +55,14 @@
 							</thead>
 							<tbody>
 							<!-- Example product row with image -->
-							<tr>
-								<td class="product-name">Phone Case</td>
+							<tr th:each="item : ${shoppingCartList}">
+								<td class="product-name" th:text="${item.customizingEntity.getCustomizingTitle()}"></td>
 								<td class="product-image"><img src="img/phone_case.jpg" alt="Phone Case" style="width: 80px; height: auto;"></td>
-								<td class="product-price">$10.00</td>
-								<td class="product-quantity"><input type="number" value="1" min="1"></td>
-								<td class="product-total">$10.00</td>
+								<td class="product-price" th:text="${item.customizingEntity.getCustomizingPrice()}"></td>
+								<td class="product-quantity">
+									<input type="number" value="1" min="1" onchange="updateProductTotal(this)">
+								</td>
+								<td class="product-total" th:text="${item.customizingEntity.getCustomizingPrice()}"></td>
 								<td class="product-remove"><a href="#" class="remove">Remove</a></td>
 							</tr>
 							<!-- Additional rows as needed -->
@@ -75,9 +77,10 @@
 					<a href="" class="btn btn-secondary">Continue Shopping</a>
 				</div>
 				<div class="col-md-4 text-right animate-box">
-					<h3>Total: $10.00</h3>
-					<a href="/shopping/payment?totalPrice=1000" class="btn btn-primary">Proceed to Checkout</a>
+					<h3>Total: <span id="overall-total">$10.00</span></h3>
+					<a href="#" id="proceed-to-checkout" class="btn btn-primary">Proceed to Checkout</a>
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -129,8 +132,8 @@
 		</div>
 	</div>
 
-	<div th:replace="include/bottom :: bottomDiv"></div>
-	<footer th:replace="include/bottom :: bottomFooter"></footer>
+	<div th:replace="~{include/bottom :: bottomDiv}"></div>
+	<footer th:replace="~{include/bottom :: bottomFooter}"></footer>
 
 </div>
 
@@ -141,6 +144,27 @@
 <script src="/js/jquery.countTo.js"></script>
 <script src="/js/jquery.flexslider-min.js"></script>
 <script src="/js/main.js"></script>
+<script>
+	function updateProductTotal(quantityInput) {
+		const row = quantityInput.closest('tr');
+		const price = parseFloat(row.querySelector('.product-price').textContent.trim());
+		const quantity = parseInt(quantityInput.value);
+		const total = price * quantity;
+		row.querySelector('.product-total').textContent = `$${total.toFixed(2)}`;
+		updateOverallTotal();
+	}
+
+	function updateOverallTotal() {
+		let overallTotal = 0;
+		document.querySelectorAll('.product-total').forEach((totalCell) => {
+			const total = parseFloat(totalCell.textContent.replace('$', '').trim());
+			overallTotal += total;
+		});
+		document.getElementById('overall-total').textContent = `$${overallTotal.toFixed(2)}`;
+		const checkoutButton = document.getElementById('proceed-to-checkout');
+		checkoutButton.href = `/shopping/payment?totalPrice=${overallTotal.toFixed(2)}`;
+	}
+</script>
 
 </body>
 </html>

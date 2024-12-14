@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -31,20 +32,24 @@ public class ShoppingController {
     //--------------------------------------------
 
     @GetMapping("/cart")
-    public String cart() {
+    public String cart(Model model) {
 
         List<ShoppingCartEntity> shoppingCartList = shoppingService.getShoppingCart(loginUserBean.getUserIdx());
 
+
+        model.addAttribute("shoppingCartList", shoppingCartList);
         return "shopping/shopping_cart";
     }
 
     @GetMapping("/payment")
-    public String payment(Model model) {
-        System.out.println(loginUserBean.getUserFn());
-        System.out.println(loginUserBean.getUserAddress());
-        System.out.println(loginUserBean.getUserPhone());
-        System.out.println(loginUserBean.getUserPoint());
-        System.out.println(loginUserBean.getUserRole());
+    public String payment(@RequestParam("totalPrice") Long totalPrice, Model model) {
+
+
+        List<ShoppingCartEntity> shoppingCartList = shoppingService.getShoppingCart(loginUserBean.getUserIdx());
+
+
+        model.addAttribute("shoppingCartList", shoppingCartList);
+        model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("loginUserBean", loginUserBean);
         return "shopping/shopping_payment";
     }

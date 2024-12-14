@@ -132,6 +132,13 @@
 
             </div>
 
+            <div th:switch="${loginUserBean.userRole}">
+                <p th:case="user">
+                    <a href="admin/admin_menu">ADMIN</a>
+                </p>
+
+            </div>
+
         </div>
 
 
