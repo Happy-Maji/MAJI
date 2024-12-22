@@ -29,6 +29,26 @@ public class CustomizingBean {
     private Long customizingInfoIdx;
 
     private Long userIdx;
+
+    // 기본 생성자 추가
+    public CustomizingBean() {
+    }
+
+    public CustomizingBean(Long customizingIdx, String customizingTitle, String customizingImg,
+                           LocalDateTime customizingDate, Integer customizingViewCount,
+                           Long customizingPrice, String customizingContent,
+                           String customizingInfoName, Long userIdx, String userId) {
+        this.customizingIdx = customizingIdx;
+        this.customizingTitle = customizingTitle;
+        this.customizingImg = customizingImg;
+        this.customizingDate = customizingDate;
+        this.customizingViewCount = customizingViewCount;
+        this.customizingPrice = customizingPrice;
+        this.customizingContent = customizingContent;
+        this.customizingInfoIdx = customizingInfoName != null ? Long.valueOf(customizingInfoName) : null;
+        this.userIdx = userIdx;
+    }
+
 }
 
 

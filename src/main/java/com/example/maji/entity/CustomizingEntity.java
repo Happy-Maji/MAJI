@@ -24,7 +24,6 @@ public class CustomizingEntity {
     @Column(name = "customizing_title", nullable = false)
     private String customizingTitle;
 
-    @Lob // 대용량 텍스트 저장
     @Column(name = "customizing_content", nullable = false)
     private String customizingContent;
 

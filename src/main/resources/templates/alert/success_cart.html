@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            title: '장바구니 담기 완료',
+            text: '마이페이지 - 장바구니를 확인해주세요',
+            icon: 'success',
+            confirmButtonText: '확인'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/content/content_main';
+            }
+        });
+    });
+</script>
+
+<!--success: 성공 메시지-->
+<!--error: 오류 메시지-->
+<!--warning: 경고 메시지-->
+<!--info: 정보 메시지-->
+<!--question: 질문 메시지-->
