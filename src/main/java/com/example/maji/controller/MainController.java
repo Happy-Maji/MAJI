@@ -35,12 +35,6 @@ public class MainController {
         return "customizing/customizing_main";
     }
 
-    @GetMapping("/content_main")
-    public String content_main(Model model) {
-        return "content/content_main";
-    }
-
-
     @GetMapping("/about_main")
     public String about_main(Model model) {
         return "partials/about_main";

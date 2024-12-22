@@ -59,6 +59,7 @@ public class UserController {
 
         if (userService.authenticate(userId, userPass)) {
             redirectAttributes.addFlashAttribute("message", "로그인 성공!");
+
             return new ModelAndView("redirect:/index_main");
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
