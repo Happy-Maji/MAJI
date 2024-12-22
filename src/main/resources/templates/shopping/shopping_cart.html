@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +19,8 @@
 </head>
 <body>
 
-<header th:replace="include/top :: top"></header>
+<div th:replace="~{include/top :: top}"></div>
+
 
 <div id="fh5co-page">
 	<header>
@@ -78,7 +80,7 @@
 				</div>
 				<div class="col-md-4 text-right animate-box">
 					<h3>Total: <span id="overall-total">$10.00</span></h3>
-					<a href="#" id="proceed-to-checkout" class="btn btn-primary">Proceed to Checkout</a>
+					<a href="/shopping/payment" id="proceed-to-checkout" class="btn btn-primary">Proceed to Checkout</a>
 				</div>
 
 			</div>
@@ -147,22 +149,25 @@
 <script>
 	function updateProductTotal(quantityInput) {
 		const row = quantityInput.closest('tr');
-		const price = parseFloat(row.querySelector('.product-price').textContent.trim());
+		const price = parseFloat(row.querySelector('.product-price').textContent.replace('$', '').trim()); // 숫자 처리
 		const quantity = parseInt(quantityInput.value);
 		const total = price * quantity;
-		row.querySelector('.product-total').textContent = `$${total.toFixed(2)}`;
+
+		row.querySelector('.product-total').setAttribute('data-total', total); // 숫자로 처리
+
+		// Update the total price
 		updateOverallTotal();
 	}
 
 	function updateOverallTotal() {
 		let overallTotal = 0;
 		document.querySelectorAll('.product-total').forEach((totalCell) => {
-			const total = parseFloat(totalCell.textContent.replace('$', '').trim());
+			const total = parseFloat(totalCell.getAttribute('data-total')); // data-total에서 숫자 가져오기
 			overallTotal += total;
 		});
-		document.getElementById('overall-total').textContent = `$${overallTotal.toFixed(2)}`;
+		document.getElementById('overall-total').textContent = overallTotal.toFixed(2); // 숫자로만 표시
 		const checkoutButton = document.getElementById('proceed-to-checkout');
-		checkoutButton.href = `/shopping/payment?totalPrice=${overallTotal.toFixed(2)}`;
+		checkoutButton.href = `/shopping/payment?totalPrice=${overallTotal.toFixed(2)}`; // 숫자로 전달
 	}
 </script>
 

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class ImageController {
@@ -25,9 +26,9 @@ public class ImageController {
         }
 
         // 파일명 생성
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        String fileName = "custom_image_" + timestamp + ".png";
+        String fileName = "custom_" + UUID.randomUUID().toString().substring(0, 8) + ".png";
         File savedFile = new File(uploadDir + fileName);
+
 
         // 파일 저장
         try (FileOutputStream fos = new FileOutputStream(savedFile)) {
@@ -35,7 +36,7 @@ public class ImageController {
         }
 
         // 저장된 파일의 URL 생성 (캐시 방지용 타임스탬프 추가)
-        String imageUrl = "/images/" + fileName + "?timestamp=" + System.currentTimeMillis();
+        String imageUrl = "/images/" + fileName;
 
         // 응답 데이터 설정
         Map<String, String> response = new HashMap<>();
